@@ -7,6 +7,7 @@
   - [React Budget App](#react-budget-app)
 
 <!-- /TOC -->
+<!-- /TOC -->
 
 A hodge podge of demo projects to figure things out quickly in React and reference it later.
 
@@ -29,7 +30,7 @@ npm i bootstrap
 npm i uuid
 
 # Package: Create icons
-npm i react-icons	
+npm i react-icons
 
 # Start the server
 npm start
