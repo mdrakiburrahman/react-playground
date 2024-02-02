@@ -523,7 +523,7 @@ export class CopilotButtonExample extends React.Component<{}, ILineChartEventsEx
       <FluentProvider theme={webLightTheme}>
         <Button appearance="primary">
           {copilotSvg}
-          Ask Copilot
+            <h1 style={{ fontSize: '18px' }}>Ask Copilot</h1>
         </Button>
       </FluentProvider>
     );
