@@ -11,7 +11,6 @@ interface IShimmerApplicationExampleState {
 }
 
 const ITEMS_COUNT: number = 200;
-const INTERVAL_DELAY: number = 1200;
 const toggleStyle: React.CSSProperties = {
   marginBottom: '20px',
 };
@@ -96,6 +95,11 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
   });
 
   const { setInterval, clearInterval } = useSetInterval();
+  const generateRandomWaitTime = (): number => {
+    const minDelay = 200;
+    const maxDelay = 1500;
+    return Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
+  };
 
   const onLoadData = React.useCallback(
     (ev: React.MouseEvent<HTMLElement>, checked: boolean): void => {
@@ -108,7 +112,8 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
       state.visibleCount = 0;
       if (checked) {
         loadMoreItems();
-        state.lastIntervalId = setInterval(loadMoreItems, INTERVAL_DELAY);
+
+        state.lastIntervalId = setInterval(loadMoreItems, generateRandomWaitTime());
       } else {
         setItems(undefined);
         clearInterval(state.lastIntervalId);
@@ -148,22 +153,16 @@ function App() {
   return (
     <div className="container">
       <h1 className='mt-3'>Predictive Analytics</h1>
-      <div className='row mt-3'>
-        <div className='col-sm'>
-          <div style={{ width: '50vw', height: '50vh', overflow: 'auto' }}>
-            <ShimmerApplicationExample />
-          </div>
+      <div className='row mt-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ width: '48vw', height: '50vh', overflow: 'auto', marginRight: '2vw' }}>
+          <ShimmerApplicationExample />
         </div>
-        <div className='col-sm'>
-          <div style={{ width: '50vw', height: '50vh', overflow: 'auto' }}>
-            <ShimmerApplicationExample />
-          </div>
+        <div style={{ width: '48vw', height: '50vh', overflow: 'auto' }}>
+          <ShimmerApplicationExample />
         </div>
       </div>
     </div>
   );
 }
-
-
 
 export default App;
