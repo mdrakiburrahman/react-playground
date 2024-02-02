@@ -17,6 +17,7 @@ interface IShimmerApplicationExampleState {
 }
 
 export interface IRootCauseDescription {
+  thumbnail: string;
   id: string;
   description: string;
   timestamp: string;
@@ -85,42 +86,49 @@ const onRenderItemColumn = (item?: any, index?: number | undefined, column?: ICo
 
 const rootCauseMap: Record<string, IRootCauseDescription> = { 
   TRX_UNUSUAL_VOLUME: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/SqlServerInstancesDatabasesArc.svg',
     id: 'TRX_UNUSUAL_VOLUME',
     description: 'Unusual number of transactions detected',
     timestamp: '2024-02-03T09:17:30.000Z',
     payload: '{writeTransactionsPerSec: 1969.0, writeTransactionsPerSecHistoricalAverage: 132.5}',
   },
   ABNORMAL_LOG_GROWTH: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/SqlServerInstancesDatabasesArc.svg',
     id: 'ABNORMAL_LOG_GROWTH',
     description: 'Database logs are growing abnormally',
     timestamp: '2024-02-03T09:17:30.000Z',
     payload: '{allocatedSizeInGb: 26.1875, fileSizeInGb: 22.0625, writeTransactionsPerSec: 1969.0, logFlushesPerSec: 281.0, logGrowths: 0.0, logFlushWaitTime: 567.0, minsTillFullPredicted: 13}',
   },
   HIGH_REPLICA_LAG: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/HighAvailability.svg',
     id: 'HIGH_REPLICA_LAG',
     description: 'High secondary_lag_seconds detected, replica lag increased',
     timestamp: '2024-02-03T09:20:00.000Z',
     payload: '{secondaryLagSeconds: 120, continuousDurationInMinutes: 5}',
   },
   TRX_DEADLOCK: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/Deadlock.svg',
     id: 'TRX_DEADLOCK',
     description: 'High rate of transaction deadlocks detected',
     timestamp: '2024-02-03T09:22:30.000Z',
     payload: '{transactionDeadlocksPerSec: 5, continuousDurationInMinutes: 3}',
   },
   HADR_SEEDING_FAILURES: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/HighAvailability.svg',
     id: 'HADR_SEEDING_FAILURES',
     description: 'High rate of seeding failures detected',
     timestamp: '2024-02-03T19:30:00.000Z',
     payload: '{consecutiveFailedSeedingAttempts: 8}',
   },
   TRX_REJECTED_RESOURCE_CONSTRAINTS: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/Resource.svg',
     id: 'TRX_REJECTED_RESOURCE_CONSTRAINTS',
     description: 'High rate of transactions rejected',
     timestamp: '2024-02-03T21:00:00.000Z',
     payload: '{consecutiveRejectedTransactions: 14}',
   },
   LOGIN_FAILURE: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/User.svg',
     id: 'LOGIN_FAILURE',
     description: 'High rate of login failures detected',
     timestamp: '2024-02-03T23:00:00.000Z',
@@ -131,49 +139,49 @@ const rootCauseMap: Record<string, IRootCauseDescription> = {
 const internalCreateListItems = (): IRootCauseItem[] => {
   return [
     {
-      thumbnail: randomFileIcon().url,
+      thumbnail: rootCauseMap.TRX_UNUSUAL_VOLUME.thumbnail,
       time: rootCauseMap.TRX_UNUSUAL_VOLUME.timestamp,
       id: rootCauseMap.TRX_UNUSUAL_VOLUME.id,
       description: rootCauseMap.TRX_UNUSUAL_VOLUME.description,
       payload: rootCauseMap.TRX_UNUSUAL_VOLUME.payload,
     },
     {
-      thumbnail: randomFileIcon().url,
+      thumbnail: rootCauseMap.ABNORMAL_LOG_GROWTH.thumbnail,
       time: rootCauseMap.ABNORMAL_LOG_GROWTH.timestamp,
       id: rootCauseMap.ABNORMAL_LOG_GROWTH.id,
       description: rootCauseMap.ABNORMAL_LOG_GROWTH.description,
       payload: rootCauseMap.ABNORMAL_LOG_GROWTH.payload,
     },
     {
-      thumbnail: randomFileIcon().url,
+      thumbnail: rootCauseMap.HIGH_REPLICA_LAG.thumbnail,
       time: rootCauseMap.HIGH_REPLICA_LAG.timestamp,
       id: rootCauseMap.HIGH_REPLICA_LAG.id,
       description: rootCauseMap.HIGH_REPLICA_LAG.description,
       payload: rootCauseMap.HIGH_REPLICA_LAG.payload,
     },
     {
-      thumbnail: randomFileIcon().url,
+      thumbnail: rootCauseMap.TRX_DEADLOCK.thumbnail,
       time: rootCauseMap.TRX_DEADLOCK.timestamp,
       id: rootCauseMap.TRX_DEADLOCK.id,
       description: rootCauseMap.TRX_DEADLOCK.description,
       payload: rootCauseMap.TRX_DEADLOCK.payload,
     },
     {
-      thumbnail: randomFileIcon().url,
+      thumbnail: rootCauseMap.HADR_SEEDING_FAILURES.thumbnail,
       time: rootCauseMap.HADR_SEEDING_FAILURES.timestamp,
       id: rootCauseMap.HADR_SEEDING_FAILURES.id,
       description: rootCauseMap.HADR_SEEDING_FAILURES.description,
       payload: rootCauseMap.HADR_SEEDING_FAILURES.payload,
     },
     {
-      thumbnail: randomFileIcon().url,
+      thumbnail: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.thumbnail,
       time: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.timestamp,
       id: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.id,
       description: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.description,
       payload: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.payload,
     },
     {
-      thumbnail: randomFileIcon().url,
+      thumbnail: rootCauseMap.LOGIN_FAILURE.thumbnail,
       time: rootCauseMap.LOGIN_FAILURE.timestamp,
       id: rootCauseMap.LOGIN_FAILURE.id,
       description: rootCauseMap.LOGIN_FAILURE.description,
