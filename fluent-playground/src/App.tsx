@@ -156,27 +156,27 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
   constructor(props: ILineChartProps) {
     super(props);
     this.state = {
-      width: 700,
+      width: 800,
       height: 500,
       allowMultipleShapes: true,
-      customEventAnnotationColor: DataVizPalette.error,
+      customEventAnnotationColor: DataVizPalette.highError,
     };
   }
 
   public render(): JSX.Element {
     return (
       <>
-        <label htmlFor="changeWidth_Events">Change Width:</label>
+        <label htmlFor="changeWidth_Events">Width:</label>
         <input
           type="range"
           value={this.state.width}
-          min={200}
-          max={1000}
+          min={700}
+          max={1200}
           onChange={this._onWidthChange}
           id="changeWidth_Events"
           aria-valuetext={`ChangeWidthSlider${this.state.width}`}
         />
-        <label htmlFor="changeHeight_Events">Change Height:</label>
+        <label htmlFor="changeHeight_Events">Height:</label>
         <input
           type="range"
           value={this.state.height}
@@ -203,75 +203,187 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
       chartTitle: 'Line Chart',
       lineChartData: [
         {
-          legend: 'Anomalies Detected',
+          legend: 'Health Thresholds Breached',
           data: [
             {
-              x: new Date('2020-03-03T00:00:00.000Z'),
-              y: 297,
+              x: new Date('2024-02-01T00:00:00.000Z'),
+              y: 0,
             },
             {
-              x: new Date('2020-03-04T00:00:00.000Z'),
-              y: 284,
+              x: new Date('2024-02-01T06:00:00.000Z'),
+              y: 0,
             },
             {
-              x: new Date('2020-03-05T00:00:00.000Z'),
-              y: 282,
+              x: new Date('2024-02-01T12:00:00.000Z'),
+              y: 0,
             },
             {
-              x: new Date('2020-03-06T00:00:00.000Z'),
-              y: 294,
+              x: new Date('2024-02-01T18:00:00.000Z'),
+              y: 0,
             },
             {
-              x: new Date('2020-03-07T00:00:00.000Z'),
-              y: 294,
+              x: new Date('2024-02-02T00:00:00.000Z'),
+              y: 0,
             },
             {
-              x: new Date('2020-03-08T00:00:00.000Z'),
-              y: 300,
+              x: new Date('2024-02-02T06:00:00.000Z'),
+              y: 0,
             },
             {
-              x: new Date('2020-03-09T00:00:00.000Z'),
-              y: 298,
+              x: new Date('2024-02-02T12:00:00.000Z'),
+              y: 0,
             },
+            {
+              x: new Date('2024-02-02T18:00:00.000Z'),
+              y: 0,
+            },
+            {
+              x: new Date('2024-02-03T00:00:00.000Z'),
+              y: 0,
+            },
+            {
+              x: new Date('2024-02-03T06:00:00.000Z'),
+              y: 0,
+            },
+            {
+              x: new Date('2024-02-03T12:00:00.000Z'),
+              y: 0,
+            },
+            {
+              x: new Date('2024-02-03T18:00:00.000Z'),
+              y: .25,
+            },
+            {
+              x: new Date('2024-02-03T18:10:00.000Z'),
+              y: .30,
+            },
+            {
+              x: new Date('2024-02-03T18:20:00.000Z'),
+              y: .30,
+            },
+            {
+              x: new Date('2024-02-03T18:30:00.000Z'),
+              y: .50,
+            },
+            {
+              x: new Date('2024-02-03T18:35:00.000Z'),
+              y: .70,
+            },
+            {
+              x: new Date('2024-02-03T18:37:00.000Z'),
+              y: .90,
+            },
+            {
+              x: new Date('2024-02-03T19:40:30.000Z'),
+              y: .95,
+            },
+            {
+              x: new Date('2024-02-03T19:45:00.000Z'),
+              y: .99,
+            },
+            {
+              x: new Date('2024-02-03T20:45:00.000Z'),
+              y: .97,
+            },
+            {
+              x: new Date('2024-02-03T21:15:00.000Z'),
+              y: .98,
+            },
+            {
+              x: new Date('2024-02-03T21:30:00.000Z'),
+              y: .99,
+            },
+            {
+              x: new Date('2024-02-03T21:45:00.000Z'),
+              y: .99,
+            },
+            {
+              x: new Date('2024-02-03T22:30:00.000Z'),
+              y: .95,
+            },
+            {
+              x: new Date('2024-02-04T00:00:00.000Z'),
+              y: .85,
+            },
+            {
+              x: new Date('2024-02-04T02:00:00.000Z'),
+              y: .50,
+            },
+            {
+              x: new Date('2024-02-04T05:00:00.000Z'),
+              y: .30,
+            },
+            {
+              x: new Date('2024-02-04T10:00:00.000Z'),
+              y: .25,
+            },
+            {
+              x: new Date('2024-02-04T14:00:00.000Z'),
+              y: .15,
+            },
+            {
+              x: new Date('2024-02-04T23:00:00.000Z'),
+              y: .0,
+            },
+            {
+              x: new Date('2024-02-05T00:00:00.000Z'),
+              y: .0,
+            },
+            {
+              x: new Date('2024-02-06T00:00:00.000Z'),
+              y: .0,
+            },
+            {
+              x: new Date('2024-02-07T00:00:00.000Z'),
+              y: .0,
+            }
           ],
-          color: DataVizPalette.warning,
+          color: DataVizPalette.error,
           lineOptions: {
             lineBorderWidth: '4',
           },
         },
         {
-          legend: 'Thresholds Breached',
+          legend: 'Anomalies Detected',
           data: [
             {
-              x: new Date('2020-03-03T00:00:00.000Z'),
-              y: 292,
+              x: new Date('2024-02-01T00:00:00.000Z'),
+              y: 0.0,
             },
             {
-              x: new Date('2020-03-04T00:00:00.000Z'),
-              y: 287,
+              x: new Date('2024-02-02T00:00:00.000Z'),
+              y: 0.0,
             },
             {
-              x: new Date('2020-03-05T00:00:00.000Z'),
-              y: 287,
+              x: new Date('2024-02-02T18:00:00.000Z'),
+              y: 0.0,
             },
             {
-              x: new Date('2020-03-06T00:00:00.000Z'),
-              y: 292,
+              x: new Date('2024-02-03T00:00:00.000Z'),
+              y: 0.0,
             },
             {
-              x: new Date('2020-03-07T00:00:00.000Z'),
-              y: 287,
+              x: new Date('2024-02-03T09:30:00.000Z'),
+              y: 0.7,
             },
             {
-              x: new Date('2020-03-08T00:00:00.000Z'),
-              y: 297,
+              x: new Date('2024-02-04T00:00:00.000Z'),
+              y: 0.0,
             },
             {
-              x: new Date('2020-03-09T00:00:00.000Z'),
-              y: 292,
+              x: new Date('2024-02-05T00:00:00.000Z'),
+              y: 0.0,
+            },
+            {
+              x: new Date('2024-02-06T00:00:00.000Z'),
+              y: 0.0,
+            },
+            {
+              x: new Date('2024-02-07T00:00:00.000Z'),
+              y: 0.0,
             },
           ],
-          color: DataVizPalette.highError,
+          color: DataVizPalette.warning,
           lineOptions: {
             lineBorderWidth: '4',
           },
@@ -289,48 +401,60 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
         <LineChart
           data={data}
           legendsOverflowText={'Overflow Items'}
-          yMinValue={282}
-          yMaxValue={301}
-          yAxisTickFormat={d3.format('')}
-          tickFormat={'%m/%d'}
+          yMinValue={0}
+          yMaxValue={1}
+            yAxisTickFormat={d3.format('.0%')}
+            tickFormat={'%m/%d %H:%M:%S'}
           allowMultipleShapesForPoints={this.state.allowMultipleShapes}
           tickValues={[
-            new Date('2020-03-03'),
-            new Date('2020-03-04'),
-            new Date('2020-03-05'),
-            new Date('2020-03-06'),
-            new Date('2020-03-07'),
-            new Date('2020-03-08'),
-            new Date('2020-03-09'),
+            new Date('2024-02-01'),
+            new Date('2024-02-02'),
+            new Date('2024-02-03'),
+            new Date('2024-02-04'),
+            new Date('2024-02-05'),
+            new Date('2024-02-06'),
+            new Date('2024-02-07'),
           ]}
           eventAnnotationProps={{
-            // TODO: Make these event messages SQL Server specific
+            //
+            // Good errors: https://eng.ms/docs/cloud-ai-platform/azure-data/azure-data-azure-databases/sql-/sql-availability-and-geodr/sql-availability-and-geodr/trdb0023-sterling-log-full-error-9002
+            //
             events: [
               {
-                event: 'event 1',
-                date: new Date('2020-03-04T00:00:00.000Z'),
-                onRenderCard: () => <div className={calloutItemStyle}>event 1 message</div>,
+                event: 'TRX_UNUSUAL_VOLUME',
+                date: new Date('2024-02-03T09:17:30.000Z'),
+                onRenderCard: () => <div className={calloutItemStyle}>Unusual number of transactions detected</div>,
               },
               {
-                event: 'event 2',
-                date: new Date('2020-03-04T00:00:00.000Z'),
-                onRenderCard: () => <div className={calloutItemStyle}>event 2 message</div>,
+                event: 'ABNORMAL_LOG_GROWTH',
+                date: new Date('2024-02-03T09:17:30.000Z'),
+                onRenderCard: () => <div className={calloutItemStyle}>Database logs growing abnormally</div>,
               },
               {
-                event: 'event 3',
-                date: new Date('2020-03-04T00:00:00.000Z'),
-                onRenderCard: () => <div className={calloutItemStyle}>event 3 message</div>,
+                event: 'HIGH_REPLICA_LAG',
+                date: new Date('2024-02-03T09:20:00.000Z'),
+                onRenderCard: () => <div className={calloutItemStyle}>High secondary_lag_seconds detected, replica lag increased</div>,
               },
               {
-                event: 'event 4',
-                date: new Date('2020-03-06T00:00:00.000Z'),
-                onRenderCard: () => <div className={calloutItemStyle}>event 4 message</div>,
+                event: 'TRX_DEADLOCK',
+                date: new Date('2024-02-03T09:22:30.000Z'),
+                onRenderCard: () => <div className={calloutItemStyle}>Transaction deadlock detected, impacting system performance</div>,
               },
               {
-                event: 'event 5',
-                date: new Date('2020-03-08T00:00:00.000Z'),
-                onRenderCard: () => <div className={calloutItemStyle}>event 5 message</div>,
+                event: 'HADR_SEEDING_FAILURES',
+                date: new Date('2024-02-03T19:30:00.000Z'),
+                onRenderCard: () => <div className={calloutItemStyle}>Multiple seeding failures</div>,
               },
+              {
+                event: 'TRX_REJECTED_RESOURCE_CONSTRAINTS',
+                date: new Date('2024-02-03T21:00:00.000Z'),
+                onRenderCard: () => <div className={calloutItemStyle}>Multiple transactions rejected</div>,
+              },
+              {
+                event: 'LOGIN_FAILURE',
+                date: new Date('2024-02-03T23:00:00.000Z'),
+                onRenderCard: () => <div className={calloutItemStyle}>Multiple logins failed.</div>,
+              }
             ],
             strokeColor: this.state.customEventAnnotationColor,
             labelColor: this.state.customEventAnnotationColor,
@@ -341,6 +465,8 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
           height={this.state.height}
           width={this.state.width}
           enablePerfOptimization={true}
+          yAxisTitle={'Severity (%)'}
+          xAxisTitle={'Time'}
         />
       </div>
     );
@@ -359,10 +485,12 @@ function App() {
     <div className="container">
       <h1 className='mt-3'>Predictive Analytics</h1>
       <div className='row mt-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div style={{ width: '48vw', height: '50vh', overflow: 'auto', marginRight: '2vw' }}>
+        <div style={{ width: '48vw', height: '60vh', overflow: 'auto', marginRight: '2vw' }}>
+        <h2 className='mt-3'>Events</h2>
           <ShimmerApplicationExample />
         </div>
-        <div style={{ width: '48vw', height: '50vh', overflow: 'auto' }}>
+        <div style={{ width: '48vw', height: '60vh', overflow: 'auto' }}>
+        <h2 className='mt-3'>Distribution</h2>
           <LineChartEventsExample />
         </div>
       </div>
