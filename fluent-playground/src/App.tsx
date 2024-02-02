@@ -17,7 +17,6 @@ interface IShimmerApplicationExampleState {
   visibleCount: number;
 }
 
-const ITEMS_COUNT: number = 200;
 const shimmeredDetailsListProps: IListProps = {
   renderedWindowsAhead: 0,
   renderedWindowsBehind: 0,
@@ -71,6 +70,105 @@ const onRenderItemColumn = (item?: any, index?: number | undefined, column?: ICo
 
 const internalCreateListItems = (): IExampleItem[] => {
   return [
+    {
+      thumbnail: randomFileIcon().url,
+      key: 'item-0',
+      name: 'Lorem ipsum dolor sit',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      color: 'blue',
+      shape: 'triangle',
+      location: 'Los Angeles',
+      width: 100,
+      height: 200,
+    },
+    {
+      thumbnail: randomFileIcon().url,
+      key: 'item-0',
+      name: 'Lorem ipsum dolor sit',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      color: 'blue',
+      shape: 'triangle',
+      location: 'Los Angeles',
+      width: 100,
+      height: 200,
+    },
+    {
+      thumbnail: randomFileIcon().url,
+      key: 'item-0',
+      name: 'Lorem ipsum dolor sit',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      color: 'blue',
+      shape: 'triangle',
+      location: 'Los Angeles',
+      width: 100,
+      height: 200,
+    },
+    {
+      thumbnail: randomFileIcon().url,
+      key: 'item-0',
+      name: 'Lorem ipsum dolor sit',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      color: 'blue',
+      shape: 'triangle',
+      location: 'Los Angeles',
+      width: 100,
+      height: 200,
+    },
+    {
+      thumbnail: randomFileIcon().url,
+      key: 'item-0',
+      name: 'Lorem ipsum dolor sit',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      color: 'blue',
+      shape: 'triangle',
+      location: 'Los Angeles',
+      width: 100,
+      height: 200,
+    },
+    {
+      thumbnail: randomFileIcon().url,
+      key: 'item-0',
+      name: 'Lorem ipsum dolor sit',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      color: 'blue',
+      shape: 'triangle',
+      location: 'Los Angeles',
+      width: 100,
+      height: 200,
+    },
+    {
+      thumbnail: randomFileIcon().url,
+      key: 'item-0',
+      name: 'Lorem ipsum dolor sit',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      color: 'blue',
+      shape: 'triangle',
+      location: 'Los Angeles',
+      width: 100,
+      height: 200,
+    },
+    {
+      thumbnail: randomFileIcon().url,
+      key: 'item-0',
+      name: 'Lorem ipsum dolor sit',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      color: 'blue',
+      shape: 'triangle',
+      location: 'Los Angeles',
+      width: 100,
+      height: 200,
+    },
+    {
+      thumbnail: randomFileIcon().url,
+      key: 'item-0',
+      name: 'Lorem ipsum dolor sit',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      color: 'blue',
+      shape: 'triangle',
+      location: 'Los Angeles',
+      width: 100,
+      height: 200,
+    },
     {
       thumbnail: randomFileIcon().url,
       key: 'item-0',
@@ -148,6 +246,7 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
     </div>
   );
 };
+
 
 
 // =================================
@@ -542,7 +641,6 @@ export class CopilotButtonExample extends React.Component<{}, ILineChartEventsEx
     );
   }
 }
-
 
 // =================================
 //               App
