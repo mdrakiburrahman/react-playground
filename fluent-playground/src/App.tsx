@@ -3,7 +3,6 @@ import { createListItems, IExampleItem } from '@fluentui/example-data';
 import { IColumn, buildColumns, SelectionMode, Toggle, IListProps } from '@fluentui/react';
 import { ShimmeredDetailsList } from '@fluentui/react/lib/ShimmeredDetailsList';
 import { useSetInterval, useConst } from '@fluentui/react-hooks';
-import logo from './logo.svg';
 import './App.css';
 
 interface IShimmerApplicationExampleState {
@@ -62,7 +61,7 @@ const onRenderItemColumn = (item?: any, index?: number | undefined, column?: ICo
   }
 
   if (column?.key === 'thumbnail') {
-    return <img src={item.thumbnail} />;
+    return <img src={item.thumbnail} alt="" />;
   }
   return item[column?.key as keyof IExampleItem];
 };
@@ -127,7 +126,7 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
         onText="Content"
         offText="Shimmer"
       />
-      <div>
+      <div style={{ width: '50vw', height: '50vh', overflow: 'auto' }}>
         <ShimmeredDetailsList
           setKey="items"
           items={items || []}
@@ -147,8 +146,24 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
 
 function App() {
   return (
-    <ShimmerApplicationExample />
+    <div className="container">
+      <h1 className='mt-3'>Predictive Analytics</h1>
+      <div className='row mt-3'>
+        <div className='col-sm'>
+          <div style={{ width: '50vw', height: '50vh', overflow: 'auto' }}>
+            <ShimmerApplicationExample />
+          </div>
+        </div>
+        <div className='col-sm'>
+          <div style={{ width: '50vw', height: '50vh', overflow: 'auto' }}>
+            <ShimmerApplicationExample />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
+
+
 
 export default App;
