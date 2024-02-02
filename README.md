@@ -5,8 +5,8 @@
 
 - [React Playground](#react-playground)
   - [React Budget App](#react-budget-app)
+  - [Fluent UI (Typescript)](#fluent-ui-typescript)
 
-<!-- /TOC -->
 <!-- /TOC -->
 
 A hodge podge of demo projects to figure things out quickly in React and reference it later.
@@ -33,5 +33,20 @@ npm i uuid
 npm i react-icons
 
 # Start the server
+npm start
+```
+
+## Fluent UI (Typescript)
+
+```powershell
+npx create-react-app fluent-playground --template typescript
+
+cd .\fluent-playground\
+
+npm install @fluentui/react-components
+npm install @fluentui/example-data
+npm install @fluentui/react
+npm install @fluentui/react-hooks
+
 npm start
 ```
