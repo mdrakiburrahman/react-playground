@@ -16,7 +16,6 @@ interface IShimmerApplicationExampleState {
   visibleCount: number;
 }
 
-
 export interface IRootCauseDescription {
   id: string;
   description: string;
@@ -24,6 +23,7 @@ export interface IRootCauseDescription {
 
 export interface IRootCauseItem {
   thumbnail: string;
+  time: string;
   id: string;
   description: string;
   color: string;
@@ -120,6 +120,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
   return [
     {
       thumbnail: randomFileIcon().url,
+      time: '2024-02-03T09:17:30.000Z',
       id: rootCauseMap.TRX_UNUSUAL_VOLUME.id,
       description: rootCauseMap.TRX_UNUSUAL_VOLUME.description,
       color: 'blue',
@@ -130,6 +131,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
+      time: '2024-02-03T09:17:30.000Z',
       id: rootCauseMap.ABNORMAL_LOG_GROWTH.id,
       description: rootCauseMap.ABNORMAL_LOG_GROWTH.description,
       color: 'blue',
@@ -140,6 +142,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
+      time: '2024-02-03T09:17:30.000Z',
       id: rootCauseMap.HIGH_REPLICA_LAG.id,
       description: rootCauseMap.HIGH_REPLICA_LAG.description,
       color: 'blue',
@@ -150,6 +153,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
+      time: '2024-02-03T09:17:30.000Z',
       id: rootCauseMap.TRX_DEADLOCK.id,
       description: rootCauseMap.TRX_DEADLOCK.description,
       color: 'blue',
@@ -160,6 +164,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
+      time: '2024-02-03T09:17:30.000Z',
       id: rootCauseMap.HADR_SEEDING_FAILURES.id,
       description: rootCauseMap.HADR_SEEDING_FAILURES.description,
       color: 'blue',
@@ -170,6 +175,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
+      time: '2024-02-03T09:17:30.000Z',
       id: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.id,
       description: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.description,
       color: 'blue',
@@ -180,6 +186,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
+      time: '2024-02-03T09:17:30.000Z',
       id: rootCauseMap.LOGIN_FAILURE.id,
       description: rootCauseMap.LOGIN_FAILURE.description,
       color: 'blue',
@@ -205,13 +212,27 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
     const currentItems = internalCreateListItems();
     const columns: IColumn[] = buildColumns(currentItems);
     for (const column of columns) {
-      if (column.key === 'thumbnail') {
-        column.name = 'FileType';
-        column.minWidth = 16;
-        column.maxWidth = 16;
-        column.isIconOnly = true;
-        column.iconName = 'Page';
-        break;
+      switch (column.key) {
+        case 'thumbnail':
+          column.name = 'FileType';
+          column.minWidth = 16;
+          column.maxWidth = 16;
+          column.isIconOnly = true;
+          column.iconName = 'Page';
+          break;
+        case 'time':
+          column.minWidth = 150;
+          column.maxWidth = 150;
+          break;
+        case 'id':
+          column.minWidth = 250;
+          column.maxWidth = 250;
+          break;
+        case 'description':
+          column.minWidth = 400;
+          column.maxWidth = 400;
+          break;
+        
       }
     }
     return columns;
@@ -239,7 +260,7 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
   }, [clearInterval, setInterval, state]);
 
   return (
-    <div style={{ width: '100vw', height: '50vh', overflow: 'scroll' }}>
+    <div style={{ width: '300vw', height: '50vh', overflow: 'scroll' }}>
       <ShimmeredDetailsList
         setKey="items"
         items={items || []}
