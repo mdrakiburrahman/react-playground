@@ -5,6 +5,7 @@
   "dependencies": {
     "@fluentui/example-data": "^8.4.15",
     "@fluentui/react": "^8.115.3",
+    "@fluentui/react-charting": "^5.19.20",
     "@fluentui/react-components": "^9.46.3",
     "@fluentui/react-hooks": "^8.6.36",
     "@testing-library/jest-dom": "^5.17.0",
