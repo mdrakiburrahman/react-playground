@@ -1,5 +1,4 @@
 import './App.css';
-import { IExampleItem } from '@fluentui/example-data';
 import { IChartProps, ILineChartProps, LineChart, DataVizPalette } from '@fluentui/react-charting';
 import { FluentProvider, webLightTheme, Button } from "@fluentui/react-components";
 import { IColumn, buildColumns, SelectionMode, IListProps } from '@fluentui/react';
@@ -15,6 +14,23 @@ import * as React from 'react';
 interface IShimmerApplicationExampleState {
   lastIntervalId: number;
   visibleCount: number;
+}
+
+
+export interface IRootCauseDescription {
+  id: string;
+  description: string;
+}
+
+export interface IRootCauseItem {
+  thumbnail: string;
+  id: string;
+  description: string;
+  color: string;
+  shape: string;
+  location: string;
+  width: number;
+  height: number;
 }
 
 const shimmeredDetailsListProps: IListProps = {
@@ -65,16 +81,47 @@ const onRenderItemColumn = (item?: any, index?: number | undefined, column?: ICo
   if (column?.key === 'thumbnail') {
     return <img src={item.thumbnail} alt="" />;
   }
-  return item[column?.key as keyof IExampleItem];
+  return item[column?.key as keyof IRootCauseItem];
 };
 
-const internalCreateListItems = (): IExampleItem[] => {
+
+const rootCauseMap: Record<string, IRootCauseDescription> = { 
+  TRX_UNUSUAL_VOLUME: {
+    id: 'TRX_UNUSUAL_VOLUME',
+    description: 'Unusual number of transactions detected',
+  },
+  ABNORMAL_LOG_GROWTH: {
+    id: 'ABNORMAL_LOG_GROWTH',
+    description: 'Database logs are growing abnormally',
+  },
+  HIGH_REPLICA_LAG: {
+    id: 'HIGH_REPLICA_LAG',
+    description: 'High secondary_lag_seconds detected, replica lag increased',
+  },
+  TRX_DEADLOCK: {
+    id: 'TRX_DEADLOCK',
+    description: 'High rate of transaction deadlocks detected',
+  },
+  HADR_SEEDING_FAILURES: {
+    id: 'HADR_SEEDING_FAILURES',
+    description: 'High rate of seeding failures detected',
+  },
+  TRX_REJECTED_RESOURCE_CONSTRAINTS: {
+    id: 'TRX_REJECTED_RESOURCE_CONSTRAINTS',
+    description: 'High rate of transactions rejected',
+  },
+  LOGIN_FAILURE: {
+    id: 'LOGIN_FAILURE',
+    description: 'High rate of login failures detected',
+  }
+};
+
+const internalCreateListItems = (): IRootCauseItem[] => {
   return [
     {
       thumbnail: randomFileIcon().url,
-      key: 'item-0',
-      name: 'Lorem ipsum dolor sit',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      id: rootCauseMap.TRX_UNUSUAL_VOLUME.id,
+      description: rootCauseMap.TRX_UNUSUAL_VOLUME.description,
       color: 'blue',
       shape: 'triangle',
       location: 'Los Angeles',
@@ -83,9 +130,8 @@ const internalCreateListItems = (): IExampleItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      key: 'item-0',
-      name: 'Lorem ipsum dolor sit',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      id: rootCauseMap.ABNORMAL_LOG_GROWTH.id,
+      description: rootCauseMap.ABNORMAL_LOG_GROWTH.description,
       color: 'blue',
       shape: 'triangle',
       location: 'Los Angeles',
@@ -94,9 +140,8 @@ const internalCreateListItems = (): IExampleItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      key: 'item-0',
-      name: 'Lorem ipsum dolor sit',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      id: rootCauseMap.HIGH_REPLICA_LAG.id,
+      description: rootCauseMap.HIGH_REPLICA_LAG.description,
       color: 'blue',
       shape: 'triangle',
       location: 'Los Angeles',
@@ -105,9 +150,8 @@ const internalCreateListItems = (): IExampleItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      key: 'item-0',
-      name: 'Lorem ipsum dolor sit',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      id: rootCauseMap.TRX_DEADLOCK.id,
+      description: rootCauseMap.TRX_DEADLOCK.description,
       color: 'blue',
       shape: 'triangle',
       location: 'Los Angeles',
@@ -116,9 +160,8 @@ const internalCreateListItems = (): IExampleItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      key: 'item-0',
-      name: 'Lorem ipsum dolor sit',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      id: rootCauseMap.HADR_SEEDING_FAILURES.id,
+      description: rootCauseMap.HADR_SEEDING_FAILURES.description,
       color: 'blue',
       shape: 'triangle',
       location: 'Los Angeles',
@@ -127,9 +170,8 @@ const internalCreateListItems = (): IExampleItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      key: 'item-0',
-      name: 'Lorem ipsum dolor sit',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      id: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.id,
+      description: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.description,
       color: 'blue',
       shape: 'triangle',
       location: 'Los Angeles',
@@ -138,52 +180,18 @@ const internalCreateListItems = (): IExampleItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      key: 'item-0',
-      name: 'Lorem ipsum dolor sit',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      id: rootCauseMap.LOGIN_FAILURE.id,
+      description: rootCauseMap.LOGIN_FAILURE.description,
       color: 'blue',
       shape: 'triangle',
       location: 'Los Angeles',
       width: 100,
       height: 200,
-    },
-    {
-      thumbnail: randomFileIcon().url,
-      key: 'item-0',
-      name: 'Lorem ipsum dolor sit',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
-      color: 'blue',
-      shape: 'triangle',
-      location: 'Los Angeles',
-      width: 100,
-      height: 200,
-    },
-    {
-      thumbnail: randomFileIcon().url,
-      key: 'item-0',
-      name: 'Lorem ipsum dolor sit',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
-      color: 'blue',
-      shape: 'triangle',
-      location: 'Los Angeles',
-      width: 100,
-      height: 200,
-    },
-    {
-      thumbnail: randomFileIcon().url,
-      key: 'item-0',
-      name: 'Lorem ipsum dolor sit',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
-      color: 'blue',
-      shape: 'triangle',
-      location: 'Los Angeles',
-      width: 100,
-      height: 200,
-    },
+    }
   ];
 };
 
-const exampleItems: IExampleItem[] = internalCreateListItems();
+const exampleItems: IRootCauseItem[] = internalCreateListItems();
 
 export const ShimmerApplicationExample: React.FunctionComponent = () => {
   const { current: state } = React.useRef<IShimmerApplicationExampleState>({
@@ -191,7 +199,7 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
     visibleCount: 0,
   });
 
-  const [items, setItems] = React.useState<(IExampleItem | null)[] | undefined>(undefined);
+  const [items, setItems] = React.useState<(IRootCauseItem | null)[] | undefined>(undefined);
 
   const shimmerColumns: IColumn[] = useConst(() => {
     const currentItems = internalCreateListItems();
@@ -219,7 +227,7 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
   React.useEffect(() => {
     const loadMoreItems = (): void => {
       state.visibleCount = Math.min(exampleItems.length, state.visibleCount + 2);
-      setItems(exampleItems.map((current, index) => (index < state.visibleCount ? current : null)) as IExampleItem[]);
+      setItems(exampleItems.map((current, index) => (index < state.visibleCount ? current : null)) as IRootCauseItem[]);
     };
 
     loadMoreItems();
@@ -534,37 +542,37 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
             //
             events: [
               {
-                event: 'TRX_UNUSUAL_VOLUME',
+                event: rootCauseMap.TRX_UNUSUAL_VOLUME.id,
                 date: new Date('2024-02-03T09:17:30.000Z'),
                 onRenderCard: () => <div className={calloutItemStyle}>Unusual number of transactions detected</div>,
               },
               {
-                event: 'ABNORMAL_LOG_GROWTH',
+                event: rootCauseMap.ABNORMAL_LOG_GROWTH.id,
                 date: new Date('2024-02-03T09:17:30.000Z'),
                 onRenderCard: () => <div className={calloutItemStyle}>Database logs growing abnormally</div>,
               },
               {
-                event: 'HIGH_REPLICA_LAG',
+                event: rootCauseMap.HIGH_REPLICA_LAG.id,
                 date: new Date('2024-02-03T09:20:00.000Z'),
                 onRenderCard: () => <div className={calloutItemStyle}>High secondary_lag_seconds detected, replica lag increased</div>,
               },
               {
-                event: 'TRX_DEADLOCK',
+                event: rootCauseMap.TRX_DEADLOCK.id,
                 date: new Date('2024-02-03T09:22:30.000Z'),
                 onRenderCard: () => <div className={calloutItemStyle}>Multiple transaction deadlocks detected</div>,
               },
               {
-                event: 'HADR_SEEDING_FAILURES',
+                event: rootCauseMap.HADR_SEEDING_FAILURES.id,
                 date: new Date('2024-02-03T19:30:00.000Z'),
-                onRenderCard: () => <div className={calloutItemStyle}>Multiple seeding failures</div>,
+                onRenderCard: () => <div className={calloutItemStyle}>Multiple consecutive seeding failures detected</div>,
               },
               {
-                event: 'TRX_REJECTED_RESOURCE_CONSTRAINTS',
+                event: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.id,
                 date: new Date('2024-02-03T21:00:00.000Z'),
                 onRenderCard: () => <div className={calloutItemStyle}>Multiple transactions rejected</div>,
               },
               {
-                event: 'LOGIN_FAILURE',
+                event: rootCauseMap.LOGIN_FAILURE.id,
                 date: new Date('2024-02-03T23:00:00.000Z'),
                 onRenderCard: () => <div className={calloutItemStyle}>Multiple login failures detected.</div>,
               }
@@ -635,7 +643,7 @@ export class CopilotButtonExample extends React.Component<{}, ILineChartEventsEx
       <FluentProvider theme={webLightTheme}>
         <Button appearance="primary">
           {copilotSvg}
-            <h1 style={{ fontSize: '18px' }}>Ask Copilot</h1>
+          <h1 style={{ fontSize: '18px' }}>Ask Copilot</h1>
         </Button>
       </FluentProvider>
     );
@@ -674,7 +682,6 @@ export default App;
 // TODOs
 // =================================
 //
-// 0. Align line chart with table timestamps
 // 1. Add all the events into the table with sample features and labels
 // 2. Add all the heartbeats into the table
 // 3. Have a column differentiator for each category
