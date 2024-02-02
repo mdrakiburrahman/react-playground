@@ -19,6 +19,7 @@ interface IShimmerApplicationExampleState {
 export interface IRootCauseDescription {
   id: string;
   description: string;
+  timestamp: string;
 }
 
 export interface IRootCauseItem {
@@ -89,30 +90,37 @@ const rootCauseMap: Record<string, IRootCauseDescription> = {
   TRX_UNUSUAL_VOLUME: {
     id: 'TRX_UNUSUAL_VOLUME',
     description: 'Unusual number of transactions detected',
+    timestamp: '2024-02-03T09:17:30.000Z',
   },
   ABNORMAL_LOG_GROWTH: {
     id: 'ABNORMAL_LOG_GROWTH',
     description: 'Database logs are growing abnormally',
+    timestamp: '2024-02-03T09:17:30.000Z',
   },
   HIGH_REPLICA_LAG: {
     id: 'HIGH_REPLICA_LAG',
     description: 'High secondary_lag_seconds detected, replica lag increased',
+    timestamp: '2024-02-03T09:20:00.000Z',
   },
   TRX_DEADLOCK: {
     id: 'TRX_DEADLOCK',
     description: 'High rate of transaction deadlocks detected',
+    timestamp: '2024-02-03T09:22:30.000Z',
   },
   HADR_SEEDING_FAILURES: {
     id: 'HADR_SEEDING_FAILURES',
     description: 'High rate of seeding failures detected',
+    timestamp: '2024-02-03T19:30:00.000Z',
   },
   TRX_REJECTED_RESOURCE_CONSTRAINTS: {
     id: 'TRX_REJECTED_RESOURCE_CONSTRAINTS',
     description: 'High rate of transactions rejected',
+    timestamp: '2024-02-03T21:00:00.000Z',
   },
   LOGIN_FAILURE: {
     id: 'LOGIN_FAILURE',
     description: 'High rate of login failures detected',
+    timestamp: '2024-02-03T23:00:00.000Z',
   }
 };
 
@@ -120,7 +128,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
   return [
     {
       thumbnail: randomFileIcon().url,
-      time: '2024-02-03T09:17:30.000Z',
+      time: rootCauseMap.TRX_UNUSUAL_VOLUME.timestamp,
       id: rootCauseMap.TRX_UNUSUAL_VOLUME.id,
       description: rootCauseMap.TRX_UNUSUAL_VOLUME.description,
       color: 'blue',
@@ -131,7 +139,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      time: '2024-02-03T09:17:30.000Z',
+      time: rootCauseMap.ABNORMAL_LOG_GROWTH.timestamp,
       id: rootCauseMap.ABNORMAL_LOG_GROWTH.id,
       description: rootCauseMap.ABNORMAL_LOG_GROWTH.description,
       color: 'blue',
@@ -142,7 +150,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      time: '2024-02-03T09:17:30.000Z',
+      time: rootCauseMap.HIGH_REPLICA_LAG.timestamp,
       id: rootCauseMap.HIGH_REPLICA_LAG.id,
       description: rootCauseMap.HIGH_REPLICA_LAG.description,
       color: 'blue',
@@ -153,7 +161,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      time: '2024-02-03T09:17:30.000Z',
+      time: rootCauseMap.TRX_DEADLOCK.timestamp,
       id: rootCauseMap.TRX_DEADLOCK.id,
       description: rootCauseMap.TRX_DEADLOCK.description,
       color: 'blue',
@@ -164,7 +172,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      time: '2024-02-03T09:17:30.000Z',
+      time: rootCauseMap.HADR_SEEDING_FAILURES.timestamp,
       id: rootCauseMap.HADR_SEEDING_FAILURES.id,
       description: rootCauseMap.HADR_SEEDING_FAILURES.description,
       color: 'blue',
@@ -175,7 +183,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      time: '2024-02-03T09:17:30.000Z',
+      time: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.timestamp,
       id: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.id,
       description: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.description,
       color: 'blue',
@@ -186,7 +194,7 @@ const internalCreateListItems = (): IRootCauseItem[] => {
     },
     {
       thumbnail: randomFileIcon().url,
-      time: '2024-02-03T09:17:30.000Z',
+      time: rootCauseMap.LOGIN_FAILURE.timestamp,
       id: rootCauseMap.LOGIN_FAILURE.id,
       description: rootCauseMap.LOGIN_FAILURE.description,
       color: 'blue',
@@ -564,37 +572,37 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
             events: [
               {
                 event: rootCauseMap.TRX_UNUSUAL_VOLUME.id,
-                date: new Date('2024-02-03T09:17:30.000Z'),
+                date: new Date(rootCauseMap.TRX_UNUSUAL_VOLUME.timestamp),
                 onRenderCard: () => <div className={calloutItemStyle}>Unusual number of transactions detected</div>,
               },
               {
                 event: rootCauseMap.ABNORMAL_LOG_GROWTH.id,
-                date: new Date('2024-02-03T09:17:30.000Z'),
+                date: new Date(rootCauseMap.ABNORMAL_LOG_GROWTH.timestamp),
                 onRenderCard: () => <div className={calloutItemStyle}>Database logs growing abnormally</div>,
               },
               {
                 event: rootCauseMap.HIGH_REPLICA_LAG.id,
-                date: new Date('2024-02-03T09:20:00.000Z'),
+                date: new Date(rootCauseMap.HIGH_REPLICA_LAG.timestamp),
                 onRenderCard: () => <div className={calloutItemStyle}>High secondary_lag_seconds detected, replica lag increased</div>,
               },
               {
                 event: rootCauseMap.TRX_DEADLOCK.id,
-                date: new Date('2024-02-03T09:22:30.000Z'),
+                date: new Date(rootCauseMap.TRX_DEADLOCK.timestamp),
                 onRenderCard: () => <div className={calloutItemStyle}>Multiple transaction deadlocks detected</div>,
               },
               {
                 event: rootCauseMap.HADR_SEEDING_FAILURES.id,
-                date: new Date('2024-02-03T19:30:00.000Z'),
+                date: new Date(rootCauseMap.HADR_SEEDING_FAILURES.timestamp),
                 onRenderCard: () => <div className={calloutItemStyle}>Multiple consecutive seeding failures detected</div>,
               },
               {
                 event: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.id,
-                date: new Date('2024-02-03T21:00:00.000Z'),
+                date: new Date(rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.timestamp),
                 onRenderCard: () => <div className={calloutItemStyle}>Multiple transactions rejected</div>,
               },
               {
                 event: rootCauseMap.LOGIN_FAILURE.id,
-                date: new Date('2024-02-03T23:00:00.000Z'),
+                date: new Date(rootCauseMap.LOGIN_FAILURE.timestamp),
                 onRenderCard: () => <div className={calloutItemStyle}>Multiple login failures detected.</div>,
               }
             ],
