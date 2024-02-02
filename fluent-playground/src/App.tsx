@@ -1,9 +1,7 @@
 import './App.css';
-import { Checkbox } from '@fluentui/react/lib/Checkbox';
-import { ColorPicker, IColor } from '@fluentui/react';
 import { createListItems, IExampleItem } from '@fluentui/example-data';
 import { IChartProps, ILineChartProps, LineChart, DataVizPalette } from '@fluentui/react-charting';
-import { IColumn, buildColumns, SelectionMode, Toggle, IListProps } from '@fluentui/react';
+import { IColumn, buildColumns, SelectionMode, IListProps } from '@fluentui/react';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
 import { ShimmeredDetailsList } from '@fluentui/react/lib/ShimmeredDetailsList';
 import { useSetInterval, useConst } from '@fluentui/react-hooks';
@@ -19,9 +17,6 @@ interface IShimmerApplicationExampleState {
 }
 
 const ITEMS_COUNT: number = 200;
-const toggleStyle: React.CSSProperties = {
-  marginBottom: '20px',
-};
 const shimmeredDetailsListProps: IListProps = {
   renderedWindowsAhead: 0,
   renderedWindowsBehind: 0,
@@ -109,50 +104,34 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
     return Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
   };
 
-  const onLoadData = React.useCallback(
-    (ev: React.MouseEvent<HTMLElement>, checked: boolean): void => {
-      const loadMoreItems = (): void => {
-        state.visibleCount = Math.min(exampleItems.length, state.visibleCount + 2);
+  React.useEffect(() => {
+    const loadMoreItems = (): void => {
+      state.visibleCount = Math.min(exampleItems.length, state.visibleCount + 2);
+      setItems(exampleItems.map((current, index) => (index < state.visibleCount ? current : null)) as IExampleItem[]);
+    };
 
-        setItems(exampleItems.map((current, index) => (index < state.visibleCount ? current : null)) as IExampleItem[]);
-      };
+    loadMoreItems();
+    state.lastIntervalId = setInterval(loadMoreItems, generateRandomWaitTime());
 
-      state.visibleCount = 0;
-      if (checked) {
-        loadMoreItems();
-
-        state.lastIntervalId = setInterval(loadMoreItems, generateRandomWaitTime());
-      } else {
-        setItems(undefined);
-        clearInterval(state.lastIntervalId);
-      }
-    },
-    [clearInterval, setInterval, state],
-  );
+    return () => {
+      clearInterval(state.lastIntervalId);
+    };
+  }, [clearInterval, setInterval, state]);
 
   return (
-    <>
-      <Toggle
-        style={toggleStyle}
-        label="Toggle to load content"
-        onChange={(ev: React.MouseEvent<HTMLElement>, checked: boolean | undefined) => onLoadData(ev, checked || false)}
-        onText="Content"
-        offText="Shimmer"
+    <div style={{ width: '50vw', height: '50vh', overflow: 'auto' }}>
+      <ShimmeredDetailsList
+        setKey="items"
+        items={items || []}
+        columns={shimmerColumns}
+        selectionMode={SelectionMode.none}
+        onRenderItemColumn={onRenderItemColumn}
+        enableShimmer={!items}
+        ariaLabelForShimmer="Content is being fetched"
+        ariaLabelForGrid="Item details"
+        listProps={shimmeredDetailsListProps}
       />
-      <div style={{ width: '50vw', height: '50vh', overflow: 'auto' }}>
-        <ShimmeredDetailsList
-          setKey="items"
-          items={items || []}
-          columns={shimmerColumns}
-          selectionMode={SelectionMode.none}
-          onRenderItemColumn={onRenderItemColumn}
-          enableShimmer={!items}
-          ariaLabelForShimmer="Content is being fetched"
-          ariaLabelForGrid="Item details"
-          listProps={shimmeredDetailsListProps}
-        />
-      </div>
-    </>
+    </div>
   );
 };
 
@@ -178,8 +157,8 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
     super(props);
     this.state = {
       width: 700,
-      height: 330,
-      allowMultipleShapes: false,
+      height: 500,
+      allowMultipleShapes: true,
       customEventAnnotationColor: undefined,
     };
   }
@@ -207,24 +186,6 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
           onChange={this._onHeightChange}
           aria-valuetext={`ChangeHeightslider${this.state.height}`}
         />
-        <Toggle
-          label="Enabled multiple shapes for each line"
-          onText="On"
-          offText="Off"
-          onChange={this._onShapeChange}
-          checked={this.state.allowMultipleShapes}
-        />
-        <Checkbox
-          label="Use Custom Color for Event Annotation"
-          checked={this.state.customEventAnnotationColor !== undefined}
-          onChange={this._onToggleCustomEventAnnotationColor}
-        />
-        {this.state.customEventAnnotationColor && (
-          <ColorPicker
-            onChange={this._onChangeCustomEventAnnotationColor}
-            color={this.state.customEventAnnotationColor}
-          />
-        )}
         <div>{this._basicExample()}</div>
       </>
     );
@@ -235,19 +196,6 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
   };
   private _onHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ height: parseInt(e.target.value, 10) });
-  };
-  private _onShapeChange = (ev: React.MouseEvent<HTMLElement>, checked?: boolean | undefined) => {
-    if (checked !== undefined) {
-      this.setState({ allowMultipleShapes: checked });
-    }
-  };
-  private _onToggleCustomEventAnnotationColor = (ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean | undefined) => {
-    if (checked !== undefined) {
-      this.setState({ customEventAnnotationColor: checked ? '#111111' : undefined });
-    }
-  };
-  private _onChangeCustomEventAnnotationColor = (ev: React.SyntheticEvent<HTMLElement, Event>, color: IColor) => {
-    this.setState({ customEventAnnotationColor: color.str });
   };
 
   private _basicExample(): JSX.Element {
@@ -398,6 +346,12 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
   }
 }
 
+
+// =================================
+//               App
+// =================================
+
+// TODO: Add a button in the middle of the screen with a copilot svg logo that says "Ask Copilot"
 
 function App() {
   return (
