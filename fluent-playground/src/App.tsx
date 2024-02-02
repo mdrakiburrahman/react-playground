@@ -654,11 +654,11 @@ function App() {
         <CopilotButtonExample />
       </div>
       <div className='row mt-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div style={{ width: '84vw', height: '60vh', overflow: 'scroll', marginRight: '2vw' }}>
+        <div style={{ width: '50vw', height: '60vh', overflow: 'scroll', marginRight: '2vw' }}>
           <h2 className='mt-3'>Events</h2>
           <ShimmerApplicationExample />
         </div>
-        <div style={{ width: '48vw', height: '60vh', overflow: 'scroll' }}>
+        <div style={{ width: '50vw', height: '60vh', overflow: 'scroll' }}>
           <h2 className='mt-3'>Distribution</h2>
           <LineChartEventsExample />
         </div>
