@@ -159,7 +159,7 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
       width: 700,
       height: 500,
       allowMultipleShapes: true,
-      customEventAnnotationColor: undefined,
+      customEventAnnotationColor: DataVizPalette.error,
     };
   }
 
@@ -203,7 +203,7 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
       chartTitle: 'Line Chart',
       lineChartData: [
         {
-          legend: 'From_Legacy_to_O365',
+          legend: 'Anomalies Detected',
           data: [
             {
               x: new Date('2020-03-03T00:00:00.000Z'),
@@ -234,13 +234,13 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
               y: 298,
             },
           ],
-          color: DataVizPalette.color8,
+          color: DataVizPalette.warning,
           lineOptions: {
             lineBorderWidth: '4',
           },
         },
         {
-          legend: 'All',
+          legend: 'Thresholds Breached',
           data: [
             {
               x: new Date('2020-03-03T00:00:00.000Z'),
@@ -271,7 +271,7 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
               y: 292,
             },
           ],
-          color: DataVizPalette.color10,
+          color: DataVizPalette.highError,
           lineOptions: {
             lineBorderWidth: '4',
           },
@@ -291,7 +291,7 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
           legendsOverflowText={'Overflow Items'}
           yMinValue={282}
           yMaxValue={301}
-          yAxisTickFormat={d3.format('$,')}
+          yAxisTickFormat={d3.format('')}
           tickFormat={'%m/%d'}
           allowMultipleShapesForPoints={this.state.allowMultipleShapes}
           tickValues={[
@@ -304,6 +304,7 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
             new Date('2020-03-09'),
           ]}
           eventAnnotationProps={{
+            // TODO: Make these event messages SQL Server specific
             events: [
               {
                 event: 'event 1',
