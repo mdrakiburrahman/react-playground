@@ -20,6 +20,7 @@ export interface IRootCauseDescription {
   id: string;
   description: string;
   timestamp: string;
+  payload: string;
 }
 
 export interface IRootCauseItem {
@@ -27,11 +28,7 @@ export interface IRootCauseItem {
   time: string;
   id: string;
   description: string;
-  color: string;
-  shape: string;
-  location: string;
-  width: number;
-  height: number;
+  payload: string;
 }
 
 const shimmeredDetailsListProps: IListProps = {
@@ -91,36 +88,43 @@ const rootCauseMap: Record<string, IRootCauseDescription> = {
     id: 'TRX_UNUSUAL_VOLUME',
     description: 'Unusual number of transactions detected',
     timestamp: '2024-02-03T09:17:30.000Z',
+    payload: '{writeTransactionsPerSec: 1969.0, writeTransactionsPerSecHistoricalAverage: 132.5}',
   },
   ABNORMAL_LOG_GROWTH: {
     id: 'ABNORMAL_LOG_GROWTH',
     description: 'Database logs are growing abnormally',
     timestamp: '2024-02-03T09:17:30.000Z',
+    payload: '{allocatedSizeInGb: 26.1875, fileSizeInGb: 22.0625, writeTransactionsPerSec: 1969.0, logFlushesPerSec: 281.0, logGrowths: 0.0, logFlushWaitTime: 567.0, minsTillFullPredicted: 13}',
   },
   HIGH_REPLICA_LAG: {
     id: 'HIGH_REPLICA_LAG',
     description: 'High secondary_lag_seconds detected, replica lag increased',
     timestamp: '2024-02-03T09:20:00.000Z',
+    payload: '{secondaryLagSeconds: 120, continuousDurationInMinutes: 5}',
   },
   TRX_DEADLOCK: {
     id: 'TRX_DEADLOCK',
     description: 'High rate of transaction deadlocks detected',
     timestamp: '2024-02-03T09:22:30.000Z',
+    payload: '{transactionDeadlocksPerSec: 5, continuousDurationInMinutes: 3}',
   },
   HADR_SEEDING_FAILURES: {
     id: 'HADR_SEEDING_FAILURES',
     description: 'High rate of seeding failures detected',
     timestamp: '2024-02-03T19:30:00.000Z',
+    payload: '{consecutiveFailedSeedingAttempts: 8}',
   },
   TRX_REJECTED_RESOURCE_CONSTRAINTS: {
     id: 'TRX_REJECTED_RESOURCE_CONSTRAINTS',
     description: 'High rate of transactions rejected',
     timestamp: '2024-02-03T21:00:00.000Z',
+    payload: '{consecutiveRejectedTransactions: 14}',
   },
   LOGIN_FAILURE: {
     id: 'LOGIN_FAILURE',
     description: 'High rate of login failures detected',
     timestamp: '2024-02-03T23:00:00.000Z',
+    payload: '{loginFailuresPerSec: 3}',
   }
 };
 
@@ -131,77 +135,49 @@ const internalCreateListItems = (): IRootCauseItem[] => {
       time: rootCauseMap.TRX_UNUSUAL_VOLUME.timestamp,
       id: rootCauseMap.TRX_UNUSUAL_VOLUME.id,
       description: rootCauseMap.TRX_UNUSUAL_VOLUME.description,
-      color: 'blue',
-      shape: 'triangle',
-      location: 'Los Angeles',
-      width: 100,
-      height: 200,
+      payload: rootCauseMap.TRX_UNUSUAL_VOLUME.payload,
     },
     {
       thumbnail: randomFileIcon().url,
       time: rootCauseMap.ABNORMAL_LOG_GROWTH.timestamp,
       id: rootCauseMap.ABNORMAL_LOG_GROWTH.id,
       description: rootCauseMap.ABNORMAL_LOG_GROWTH.description,
-      color: 'blue',
-      shape: 'triangle',
-      location: 'Los Angeles',
-      width: 100,
-      height: 200,
+      payload: rootCauseMap.ABNORMAL_LOG_GROWTH.payload,
     },
     {
       thumbnail: randomFileIcon().url,
       time: rootCauseMap.HIGH_REPLICA_LAG.timestamp,
       id: rootCauseMap.HIGH_REPLICA_LAG.id,
       description: rootCauseMap.HIGH_REPLICA_LAG.description,
-      color: 'blue',
-      shape: 'triangle',
-      location: 'Los Angeles',
-      width: 100,
-      height: 200,
+      payload: rootCauseMap.HIGH_REPLICA_LAG.payload,
     },
     {
       thumbnail: randomFileIcon().url,
       time: rootCauseMap.TRX_DEADLOCK.timestamp,
       id: rootCauseMap.TRX_DEADLOCK.id,
       description: rootCauseMap.TRX_DEADLOCK.description,
-      color: 'blue',
-      shape: 'triangle',
-      location: 'Los Angeles',
-      width: 100,
-      height: 200,
+      payload: rootCauseMap.TRX_DEADLOCK.payload,
     },
     {
       thumbnail: randomFileIcon().url,
       time: rootCauseMap.HADR_SEEDING_FAILURES.timestamp,
       id: rootCauseMap.HADR_SEEDING_FAILURES.id,
       description: rootCauseMap.HADR_SEEDING_FAILURES.description,
-      color: 'blue',
-      shape: 'triangle',
-      location: 'Los Angeles',
-      width: 100,
-      height: 200,
+      payload: rootCauseMap.HADR_SEEDING_FAILURES.payload,
     },
     {
       thumbnail: randomFileIcon().url,
       time: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.timestamp,
       id: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.id,
       description: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.description,
-      color: 'blue',
-      shape: 'triangle',
-      location: 'Los Angeles',
-      width: 100,
-      height: 200,
+      payload: rootCauseMap.TRX_REJECTED_RESOURCE_CONSTRAINTS.payload,
     },
     {
       thumbnail: randomFileIcon().url,
       time: rootCauseMap.LOGIN_FAILURE.timestamp,
       id: rootCauseMap.LOGIN_FAILURE.id,
       description: rootCauseMap.LOGIN_FAILURE.description,
-      color: 'blue',
-      shape: 'triangle',
-      location: 'Los Angeles',
-      width: 100,
-      height: 200,
+      payload: rootCauseMap.LOGIN_FAILURE.payload,
     }
   ];
 };
@@ -268,7 +244,7 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
   }, [clearInterval, setInterval, state]);
 
   return (
-    <div style={{ width: '300vw', height: '50vh', overflow: 'scroll' }}>
+    <div style={{ width: '175vw', height: '50vh', overflow: 'scroll' }}>
       <ShimmeredDetailsList
         setKey="items"
         items={items || []}
