@@ -689,15 +689,3 @@ function App() {
 }
 
 export default App;
-
-
-// =================================
-// TODOs
-// =================================
-//
-// 1. Add all the events into the table with sample features and labels
-// 2. Add all the heartbeats into the table
-// 3. Have a column differentiator for each category
-// 4. Have SVGs for each category (Health is all hearts, and anomalies, try to break apart)
-// 5. If necessary, add more events to the line chart and tables
-//
