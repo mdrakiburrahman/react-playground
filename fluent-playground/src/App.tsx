@@ -1,5 +1,5 @@
 import './App.css';
-import { createListItems, IExampleItem } from '@fluentui/example-data';
+import { IExampleItem } from '@fluentui/example-data';
 import { IChartProps, ILineChartProps, LineChart, DataVizPalette } from '@fluentui/react-charting';
 import { FluentProvider, webLightTheme, Button } from "@fluentui/react-components";
 import { IColumn, buildColumns, SelectionMode, IListProps } from '@fluentui/react';
@@ -69,10 +69,23 @@ const onRenderItemColumn = (item?: any, index?: number | undefined, column?: ICo
   return item[column?.key as keyof IExampleItem];
 };
 
-const exampleItems: IExampleItem[] = createListItems(ITEMS_COUNT).map((item: IExampleItem) => {
-  const randomFileType = randomFileIcon();
-  return { ...item, thumbnail: randomFileType.url };
-});
+const internalCreateListItems = (): IExampleItem[] => {
+  return [
+    {
+      thumbnail: randomFileIcon().url,
+      key: 'item-0',
+      name: 'Lorem ipsum dolor sit',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+      color: 'blue',
+      shape: 'triangle',
+      location: 'Los Angeles',
+      width: 100,
+      height: 200,
+    },
+  ];
+};
+
+const exampleItems: IExampleItem[] = internalCreateListItems();
 
 export const ShimmerApplicationExample: React.FunctionComponent = () => {
   const { current: state } = React.useRef<IShimmerApplicationExampleState>({
@@ -83,7 +96,7 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
   const [items, setItems] = React.useState<(IExampleItem | null)[] | undefined>(undefined);
 
   const shimmerColumns: IColumn[] = useConst(() => {
-    const currentItems = createListItems(1);
+    const currentItems = internalCreateListItems();
     const columns: IColumn[] = buildColumns(currentItems);
     for (const column of columns) {
       if (column.key === 'thumbnail') {
@@ -120,7 +133,7 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
   }, [clearInterval, setInterval, state]);
 
   return (
-    <div style={{ width: '50vw', height: '50vh', overflow: 'auto' }}>
+    <div style={{ width: '100vw', height: '50vh', overflow: 'scroll' }}>
       <ShimmeredDetailsList
         setKey="items"
         items={items || []}
@@ -543,11 +556,11 @@ function App() {
         <CopilotButtonExample />
       </div>
       <div className='row mt-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div style={{ width: '48vw', height: '60vh', overflow: 'auto', marginRight: '2vw' }}>
+        <div style={{ width: '84vw', height: '60vh', overflow: 'scroll', marginRight: '2vw' }}>
           <h2 className='mt-3'>Events</h2>
           <ShimmerApplicationExample />
         </div>
-        <div style={{ width: '48vw', height: '60vh', overflow: 'auto' }}>
+        <div style={{ width: '48vw', height: '60vh', overflow: 'scroll' }}>
           <h2 className='mt-3'>Distribution</h2>
           <LineChartEventsExample />
         </div>
