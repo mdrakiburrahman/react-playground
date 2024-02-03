@@ -37,41 +37,6 @@ const shimmeredDetailsListProps: IListProps = {
   renderedWindowsBehind: 0,
 };
 
-const fileIcons: { name: string }[] = [
-  { name: 'accdb' },
-  { name: 'audio' },
-  { name: 'code' },
-  { name: 'csv' },
-  { name: 'docx' },
-  { name: 'dotx' },
-  { name: 'mpt' },
-  { name: 'model' },
-  { name: 'one' },
-  { name: 'onetoc' },
-  { name: 'pdf' },
-  { name: 'photo' },
-  { name: 'pptx' },
-  { name: 'presentation' },
-  { name: 'potx' },
-  { name: 'pub' },
-  { name: 'rtf' },
-  { name: 'spreadsheet' },
-  { name: 'txt' },
-  { name: 'vector' },
-  { name: 'vsdx' },
-  { name: 'xlsx' },
-  { name: 'xltx' },
-  { name: 'xsn' },
-];
-
-const randomFileIcon = (): { docType: string; url: string } => {
-  const docType: string = fileIcons[Math.floor(Math.random() * fileIcons.length) + 0].name;
-  return {
-    docType,
-    url: `https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/assets/item-types/16/${docType}.svg`,
-  };
-};
-
 const onRenderItemColumn = (item?: any, index?: number | undefined, column?: IColumn | undefined): React.ReactNode => {
   if (!item) {
     return null;
@@ -671,7 +636,7 @@ function App() {
   return (
     <div className="container">
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <h1 className='mt-3' style={{ marginRight: '10px' }}>Preventive Intelligence</h1>
+        <h1 className='mt-3' style={{ marginRight: '10px' }}>AIOps</h1>
         <CopilotButtonExample />
       </div>
       <div className='row mt-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
