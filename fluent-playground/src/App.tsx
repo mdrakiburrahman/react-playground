@@ -1,12 +1,105 @@
 import './App.css';
-import { IChartProps, ILineChartProps, LineChart, DataVizPalette } from '@fluentui/react-charting';
+import { createListItems, IExampleItem } from '@fluentui/example-data';
 import { FluentProvider, webLightTheme, Button } from "@fluentui/react-components";
+import { FocusZone, FocusZoneDirection } from '@fluentui/react/lib/FocusZone';
+import { getRTL } from '@fluentui/react/lib/Utilities';
+import { IChartProps, ILineChartProps, LineChart, DataVizPalette } from '@fluentui/react-charting';
 import { IColumn, buildColumns, SelectionMode, IListProps } from '@fluentui/react';
+import { Icon } from '@fluentui/react/lib/Icon';
+import { Image, ImageFit } from '@fluentui/react/lib/Image';
+import { ITheme, mergeStyleSets, getTheme, getFocusStyle } from '@fluentui/react/lib/Styling';
+import { List } from '@fluentui/react/lib/List';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
 import { ShimmeredDetailsList } from '@fluentui/react/lib/ShimmeredDetailsList';
 import { useSetInterval, useConst } from '@fluentui/react-hooks';
 import * as d3 from 'd3-format';
 import * as React from 'react';
+
+// =================================
+//               Info
+// =================================
+const theme: ITheme = getTheme();
+const { palette, semanticColors, fonts } = theme;
+const classNames = mergeStyleSets({
+  itemCell: [
+    getFocusStyle(theme, { inset: -1 }),
+    {
+      minHeight: 54,
+      padding: 10,
+      boxSizing: 'border-box',
+      borderBottom: `1px solid ${semanticColors.bodyDivider}`,
+      display: 'flex',
+      selectors: {
+        '&:hover': { background: palette.neutralLight },
+      },
+    },
+  ],
+  itemImage: {
+    flexShrink: 0,
+  },
+  itemContent: {
+    marginLeft: 10,
+    overflow: 'hidden',
+    flexGrow: 1,
+  },
+  itemName: [
+    fonts.xLarge,
+    {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    },
+  ],
+  itemIndex: {
+    fontSize: fonts.small.fontSize,
+    color: palette.neutralTertiary,
+    marginBottom: 10,
+  },
+  chevron: {
+    alignSelf: 'center',
+    marginLeft: 10,
+    color: palette.neutralTertiary,
+    fontSize: fonts.large.fontSize,
+    flexShrink: 0,
+  },
+});
+
+const onRenderCell = (item: IExampleItem | undefined, index: number | undefined): JSX.Element => {
+
+  if (!item) {
+    return <></>;
+  }
+
+  return (
+    <div className={classNames.itemCell} data-is-focusable={true}>
+      <Image
+        className={classNames.itemImage}
+        src="https://res.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-react-assets/fluent-placeholder.svg"
+        width={50}
+        height={50}
+        imageFit={ImageFit.cover}
+      />
+      <div className={classNames.itemContent}>
+        <div className={classNames.itemName}>{item.name}</div>
+        <div className={classNames.itemIndex}>{`Item ${index}`}</div>
+        <div>{item.description}</div>
+      </div>
+      <Icon className={classNames.chevron} iconName={getRTL() ? 'ChevronLeft' : 'ChevronRight'} />
+    </div>
+  );
+};
+
+export const ListBasicExample: React.FunctionComponent = () => {
+  const originalItems = useConst(() => createListItems(2));
+  // eslint-disable-next-line
+  const [items, setItems] = React.useState(originalItems);
+
+  return (
+    <FocusZone direction={FocusZoneDirection.vertical}>
+      <List items={items} onRenderCell={onRenderCell} />
+    </FocusZone>
+  );
+};
 
 // =================================
 //               Table
@@ -49,7 +142,7 @@ const onRenderItemColumn = (item?: any, index?: number | undefined, column?: ICo
 };
 
 
-const rootCauseMap: Record<string, IRootCauseDescription> = { 
+const rootCauseMap: Record<string, IRootCauseDescription> = {
   TRX_UNUSUAL_VOLUME: {
     thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/SqlServerInstancesDatabasesArc.svg',
     id: 'TRX_UNUSUAL_VOLUME',
@@ -189,7 +282,7 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
           column.minWidth = 400;
           column.maxWidth = 400;
           break;
-        
+
       }
     }
     return columns;
@@ -559,7 +652,7 @@ export class LineChartEventsExample extends React.Component<{}, ILineChartEvents
             labelColor: this.state.customEventAnnotationColor,
             labelHeight: 18,
             labelWidth: 50,
-            mergedLabel: (count: number) => `${count} events`,
+            mergedLabel: (count: number) => `${count} alerts`,
           }}
           height={this.state.height}
           width={this.state.width}
@@ -629,6 +722,15 @@ export class CopilotButtonExample extends React.Component<{}, ILineChartEventsEx
 }
 
 // =================================
+//              Divider
+// =================================
+export const FluentDivider: React.FunctionComponent = () => {
+  return (
+    <div style={{ width: '100%', height: '10px', backgroundColor: '#F3F2F1' }}></div>
+  );
+};
+
+// =================================
 //               App
 // =================================
 
@@ -636,19 +738,31 @@ function App() {
   return (
     <div className="container">
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <h1 className='mt-3' style={{ marginRight: '10px' }}>AIOps</h1>
+        <h1 className='mt-3' style={{ marginRight: '10px' }}>AIOps - AI for SQL Server Operations</h1>
         <CopilotButtonExample />
       </div>
       <div className='row mt-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ width: '50vw', height: '30vh', overflow: 'scroll', marginRight: '2vw' }}>
+          <h3 className='mt-3'>Concepts</h3>
+          <ListBasicExample />
+        </div>
+        <div style={{ width: '50vw', height: '30vh', overflow: 'scroll', marginRight: '2vw' }}>
+          <h3 className='mt-3'>Data Sources</h3>
+          <ListBasicExample />
+        </div>
+      </div>
+      <FluentDivider />
+      <div className='row mt-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ width: '50vw', height: '60vh', overflow: 'scroll', marginRight: '2vw' }}>
-          <h2 className='mt-3'>Events</h2>
+          <h3 className='mt-3'>Alerts</h3>
           <ShimmerApplicationExample />
         </div>
         <div style={{ width: '50vw', height: '60vh', overflow: 'scroll' }}>
-          <h2 className='mt-3'>Distribution</h2>
+          <h3 className='mt-3'>Distribution by time</h3>
           <LineChartEventsExample />
         </div>
       </div>
+      <FluentDivider />
     </div>
   );
 }

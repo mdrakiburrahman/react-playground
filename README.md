@@ -48,6 +48,7 @@ npm install @fluentui/example-data
 npm install @fluentui/react
 npm install @fluentui/react-hooks
 npm install @fluentui/react-charting
+npm install @fluentui/web-components
 
 npm start
 ```
