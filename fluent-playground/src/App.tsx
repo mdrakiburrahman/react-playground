@@ -41,6 +41,17 @@ const classNames = mergeStyleSets({
     overflow: 'hidden',
     flexGrow: 1,
   },
+  itemHeader: [
+    fonts.xLarge,
+    {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      fontWeight: 'bold',
+      color: palette.neutralSecondary,
+      textTransform: 'uppercase',
+    },
+  ],
   itemName: [
     fonts.large,
     {
@@ -833,22 +844,22 @@ function App() {
       <FluentDivider />
       <div className='row mt-3' style={{ display: 'flex', justifyContent: 'left' }}>
         <div style={{ width: '25vw', height: '30vh', overflow: 'scroll', marginLeft: '1vw', marginRight: '2vw' }}>
-          <h3 className='mt-3'>Concepts</h3>
+          <h3 className={classNames.itemHeader}>Concepts</h3>
           <ListBasicExample headerType={HeaderType.Concept} />
         </div>
         <div style={{ width: '25vw', height: '30vh', overflow: 'scroll', marginLeft: '1vw', marginRight: '2vw' }}>
-          <h3 className='mt-3'>Data Catalog</h3>
+          <h3 className={classNames.itemHeader}>Data Catalog</h3>
           <ListBasicExample headerType={HeaderType.DataSource} />
         </div>
       </div>
       <FluentDivider />
       <div className='row mt-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ width: '50vw', height: '60vh', overflow: 'scroll', marginLeft: '1vw', marginRight: '2vw' }}>
-          <h3 className='mt-3'>Alerts</h3>
+          <h3 className={classNames.itemHeader}>Alerts</h3>
           <ShimmerApplicationExample />
         </div>
         <div style={{ width: '50vw', height: '60vh', overflow: 'scroll', marginLeft: '1vw', marginRight: '2vw' }}>
-          <h3 className='mt-3'>Distribution by time</h3>
+          <h3 className={classNames.itemHeader}>Distribution by time</h3>
           <LineChartEventsExample />
         </div>
       </div>
