@@ -1,5 +1,4 @@
 import './App.css';
-import { createListItems, IExampleItem } from '@fluentui/example-data';
 import { FluentProvider, webLightTheme, Button } from "@fluentui/react-components";
 import { FocusZone, FocusZoneDirection } from '@fluentui/react/lib/FocusZone';
 import { getRTL } from '@fluentui/react/lib/Utilities';
@@ -43,16 +42,22 @@ const classNames = mergeStyleSets({
     flexGrow: 1,
   },
   itemName: [
-    fonts.xLarge,
+    fonts.large,
     {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
+      fontWeight: 'bold',
     },
   ],
   itemIndex: {
     fontSize: fonts.small.fontSize,
     color: palette.neutralTertiary,
+    marginBottom: 10,
+  },
+  itemDescription: {
+    fontSize: fonts.medium.fontSize,
+    color: palette.neutralPrimary,
     marginBottom: 10,
   },
   chevron: {
@@ -64,7 +69,83 @@ const classNames = mergeStyleSets({
   },
 });
 
-const onRenderCell = (item: IExampleItem | undefined, index: number | undefined): JSX.Element => {
+export interface IHeaderItem {
+  thumbnail: string;
+  title: string;
+  subtitle: string;
+  description: string;
+}
+
+const conceptMap: Record<string, IHeaderItem> = {
+  AI_OPS: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/PredictiveAnalytics.svg',
+    title: 'AIOps for SQL Server',
+    subtitle: 'Predictive Intelligence for SQL Server, hosted anywhere',
+    description: `AIOps applies Artificial Intelligence and Big Data Processing to enhance IT Operation efficiency
+    using Microsoft's Intelligent Data Platform.`,
+  },
+  COPILOT: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/Copilot.svg',
+    title: 'Microsoft Copilot for SQL Server',
+    subtitle: 'Applying private LLM models hosted by SQL Server',
+    description: `Microsoft Copilot leverages AI to help you understand your SQL Serverinformation better with a simple chat
+    interface. Microsoft never shares your data with external parties - only aggregated, non-PII data is visible to the LLM.`,
+  },
+};
+
+const dataSourceMap: Record<string, IHeaderItem> = {
+  TELEMETRY: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/Telemetry.svg',
+    title: 'Telemetry Plugin',
+    subtitle: 'Collecting system telemetry, non-PII data',
+    description: `The Arc SQL Server extension periodically collects telemetry (such as DMV metrics) and logs (Arc Extension logs)
+    from the SQL Server instances and databases hosted on-premises or in the cloud.`,
+  },
+  HEARTBEAT: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/Heartbeat.svg',
+    title: 'Heartbeat and Health Plugin',
+    subtitle: 'Continuous non-intrusive monitoring of Instance health',
+    description: `The Arc SQL Server extension periodically probes various key components of the SQL Server Engine to create a
+    health model of your SQL Server Instance, Availability Groups and more.`,
+  },
+  ARC_EXTENSION_STATUS: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/ArcServer.svg',
+    title: 'Arc Server Telemetry',
+    subtitle: 'Common telemetry collected from all Arc extensions',
+    description: `The Arc Server Platform collects telemetry from all Arc extensions, such as deployment and upgrade metrics.
+    This data is used by Arc SQL Server AIOps platform to aggregate and analyze the health of the SQL Server Extension.`,
+  },
+  AZURE_RESOURCE_MANAGER: {
+    thumbnail: 'https://arcdataciadomisc.blob.core.windows.net/media/svgs/ARM.svg',
+    title: 'Azure Resource Manager',
+    subtitle: 'Common telemetry collected from ARM Control Plane',
+    description: `Azure Resource Manager - or ARM - collects Control Plane telemetry, such as operations performed against the 
+    SQL Server Instance or Arc-enabled Server. This data is used by Arc SQL Server AIOps platform to correlate events.`,
+  },
+};
+
+const createConceptItems = (): IHeaderItem[] => {
+  return [
+    conceptMap.AI_OPS,
+    conceptMap.COPILOT,
+  ];
+};
+
+const createDataSourceItems = (): IHeaderItem[] => {
+  return [
+    dataSourceMap.TELEMETRY,
+    dataSourceMap.HEARTBEAT,
+    dataSourceMap.ARC_EXTENSION_STATUS,
+    dataSourceMap.AZURE_RESOURCE_MANAGER,
+  ];
+};
+
+enum HeaderType {
+  Concept = 'Concept',
+  DataSource = 'DataSource',
+}
+
+const onRenderCell = (item: IHeaderItem | undefined, index: number | undefined): JSX.Element => {
 
   if (!item) {
     return <></>;
@@ -74,25 +155,33 @@ const onRenderCell = (item: IExampleItem | undefined, index: number | undefined)
     <div className={classNames.itemCell} data-is-focusable={true}>
       <Image
         className={classNames.itemImage}
-        src="https://res.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-react-assets/fluent-placeholder.svg"
-        width={50}
-        height={50}
+        src={item.thumbnail}
+        width={25}
+        height={25}
         imageFit={ImageFit.cover}
       />
       <div className={classNames.itemContent}>
-        <div className={classNames.itemName}>{item.name}</div>
-        <div className={classNames.itemIndex}>{`Item ${index}`}</div>
-        <div>{item.description}</div>
+        <div className={classNames.itemName}>{item.title}</div>
+        <div className={classNames.itemIndex}>{`${item.subtitle}`}</div>
+        <div className={classNames.itemDescription}>{`${item.description}`}</div>
       </div>
       <Icon className={classNames.chevron} iconName={getRTL() ? 'ChevronLeft' : 'ChevronRight'} />
     </div>
   );
 };
 
-export const ListBasicExample: React.FunctionComponent = () => {
-  const originalItems = useConst(() => createListItems(2));
-  // eslint-disable-next-line
-  const [items, setItems] = React.useState(originalItems);
+export const ListBasicExample: React.FunctionComponent<{ headerType: HeaderType }> = ({ headerType }) => {
+
+  let items: IHeaderItem[] = [];
+
+  switch (headerType) {
+    case HeaderType.Concept:
+      items = createConceptItems();
+      break;
+    case HeaderType.DataSource:
+      items = createDataSourceItems();
+      break;
+  }
 
   return (
     <FocusZone direction={FocusZoneDirection.vertical}>
@@ -310,7 +399,7 @@ export const ShimmerApplicationExample: React.FunctionComponent = () => {
   }, [clearInterval, setInterval, state]);
 
   return (
-    <div style={{ width: '175vw', height: '50vh', overflow: 'scroll' }}>
+    <div style={{ width: '100vw', height: '50vh', overflow: 'visible' }}>
       <ShimmeredDetailsList
         setKey="items"
         items={items || []}
@@ -726,7 +815,7 @@ export class CopilotButtonExample extends React.Component<{}, ILineChartEventsEx
 // =================================
 export const FluentDivider: React.FunctionComponent = () => {
   return (
-    <div style={{ width: '100%', height: '10px', backgroundColor: '#F3F2F1' }}></div>
+    <div style={{ width: '100%', height: '25px', backgroundColor: '#F3F2F1' }}></div>
   );
 };
 
@@ -738,26 +827,27 @@ function App() {
   return (
     <div className="container">
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <h1 className='mt-3' style={{ marginRight: '10px' }}>AIOps - AI for SQL Server Operations</h1>
+        <h1 className='mt-3' style={{ marginLeft: '1vw', marginRight: '1vw' }}>AIOps Dashboard (preview)</h1>
         <CopilotButtonExample />
       </div>
-      <div className='row mt-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div style={{ width: '50vw', height: '30vh', overflow: 'scroll', marginRight: '2vw' }}>
+      <FluentDivider />
+      <div className='row mt-3' style={{ display: 'flex', justifyContent: 'left' }}>
+        <div style={{ width: '25vw', height: '30vh', overflow: 'scroll', marginLeft: '1vw', marginRight: '2vw' }}>
           <h3 className='mt-3'>Concepts</h3>
-          <ListBasicExample />
+          <ListBasicExample headerType={HeaderType.Concept} />
         </div>
-        <div style={{ width: '50vw', height: '30vh', overflow: 'scroll', marginRight: '2vw' }}>
-          <h3 className='mt-3'>Data Sources</h3>
-          <ListBasicExample />
+        <div style={{ width: '25vw', height: '30vh', overflow: 'scroll', marginLeft: '1vw', marginRight: '2vw' }}>
+          <h3 className='mt-3'>Data Catalog</h3>
+          <ListBasicExample headerType={HeaderType.DataSource} />
         </div>
       </div>
       <FluentDivider />
       <div className='row mt-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div style={{ width: '50vw', height: '60vh', overflow: 'scroll', marginRight: '2vw' }}>
+        <div style={{ width: '50vw', height: '60vh', overflow: 'scroll', marginLeft: '1vw', marginRight: '2vw' }}>
           <h3 className='mt-3'>Alerts</h3>
           <ShimmerApplicationExample />
         </div>
-        <div style={{ width: '50vw', height: '60vh', overflow: 'scroll' }}>
+        <div style={{ width: '50vw', height: '60vh', overflow: 'scroll', marginLeft: '1vw', marginRight: '2vw' }}>
           <h3 className='mt-3'>Distribution by time</h3>
           <LineChartEventsExample />
         </div>
